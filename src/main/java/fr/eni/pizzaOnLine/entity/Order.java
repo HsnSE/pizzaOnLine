@@ -1,5 +1,5 @@
 package fr.eni.pizzaOnLine.entity;
 
-public class Commande {
+public class Order {
 
 }

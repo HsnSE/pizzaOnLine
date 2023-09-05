@@ -1,5 +1,5 @@
 package fr.eni.pizzaOnLine.entity;
 
-public class DetailCommande {
+public class OrderDetails {
 
 }
