@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Product List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+	<link th:href="@{style.css}" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center text-uppercase">Notre Menu</h1>
+        <br>
+        <br>
+    
+     
+    <div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-4" th:each="product : ${products}">
+        <div class="food-card">
+            <div class="food-card_img">
+                <!-- You can bind the image URL from your product object -->
+                <img th:src="${product.urlImage}" alt="" />
+                <a href="#!"><i class="far fa-heart"></i></a>
+            </div>
+            <div class="food-card_content">
+                <div class="food-card_title-section">
+                    <a href="#!" class="food-card_title" th:text="${product.nom}"></a>
+                    <a href="#!" class="food-card_author" th:text="${product.type.libelle}"></a>
+                </div>
+                <div class="food-card_bottom-section">
+                    <div class="space-between">
+                        <div>
+                            <span class="fa fa-circle-info" th:text="' '+${product.description}"></span> 
+                        </div>
+                        <div class="pull-right">
+                         
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="space-between">
+                        <div class="food-card_price">
+                            <span th:text="${product.prix}+' €'"></span>
+                        </div>
+                        <div class="food-card_order-count">
+                            <div class="input-group mb-3">
+                                
+                                <input type="hidden" id="yourId" th:value="${product.id}"/>
+                                <!-- <div th:text="${product.id}"></div> -->
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-outline-secondary minus-btn" type="button" id="button-addon"   th:onclick="'decrementValue('  + ${product.id} +  ');'"><i class="fa fa-minus"></i></button>
+                                </div>
+                                <input type="text" class="form-control input-manulator" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" th:id="'' + ${product.id}" value="0" />
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary add-btn" type="button" id="button-addon"  th:onclick="'incrementValue('  + ${product.id} +  ');'" ><i class="fa fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+           
+        </div>
+    </div>
+</section>
+    
+
+    
+</body>
+
+
+</html>
+<script >
+    let shoppingCart = [];
+
+    function incrementValue(inputId, productId) {
+    const input = document.getElementById(inputId);
+    let value = parseInt(input.value, 10);
+    value = isNaN(value) ? 0 : value;
+
+    if (value < 10) {
+        value++;
+        input.value = value;
+
+        // Add the product to the cart
+        const product = {
+            id: productId, // Use the product ID as a unique identifier
+            quantity: value,
+        };
+
+        // Check if the product is already in the cart
+        const existingProductIndex = shoppingCart.findIndex(item => item.id === productId);
+
+        if (existingProductIndex === -1) {
+            // Product is not in the cart, add it
+            shoppingCart.push(product);
+        } else {
+            // Product is already in the cart, update its quantity
+            shoppingCart[existingProductIndex].quantity = value;
+        }
+
+        // Optionally, you can update the cart UI here
+        updateCartUI();
+    }
+}
+
+function decrementValue(inputId, productId) {
+    const input = document.getElementById(inputId);
+    let value = parseInt(input.value, 10);
+    value = isNaN(value) ? 0 : value;
+
+    if (value > 0) {
+        value--;
+        input.value = value;
+
+        // Update the cart if the product is in the cart
+        const existingProductIndex = shoppingCart.findIndex(item => item.id === productId);
+
+        if (existingProductIndex !== -1) {
+            shoppingCart[existingProductIndex].quantity = value;
+
+            // If the quantity reaches zero, remove the product from the cart
+            if (value === 0) {
+                shoppingCart.splice(existingProductIndex, 1);
+            }
+
+            // Optionally, you can update the cart UI here
+            updateCartUI();
+        }
+    }
+}
+
+    </script>
+<script type="text/javascript">
+
+
+
+// 	// Assuming you have a cart container element with the id "cart-container"
+// const cartContainer = document.getElementById('cart-container');
+
+// // Function to update the cart UI
+// function updateCartUI() {
+//     // Clear the current cart UI
+//     cartContainer.innerHTML = '';
+
+//     // Iterate through the items in the cart and add them to the UI
+//     for (const product of cart) {
+//         const cartItem = document.createElement('div');
+//         cartItem.classList.add('cart-item');
+        
+//         const productName = document.createElement('span');
+//         productName.innerText = product.name;
+        
+//         const removeButton = document.createElement('button');
+//         removeButton.innerText = 'Remove';
+//         removeButton.addEventListener('click', () => removeFromCart(product.id));
+        
+//         cartItem.appendChild(productName);
+//         cartItem.appendChild(removeButton);
+//         cartContainer.appendChild(cartItem);
+//     }
+// }
+
+// Call the updateCartUI function whenever the cart changes
+// For example, after adding or removing items from the cart
+
+
+<script/>

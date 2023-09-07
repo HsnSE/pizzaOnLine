@@ -33,7 +33,7 @@ public class ProductServiceImpl implements ProductService {
 			leProduit = result.get();
 		}
 		else {
-			// we didn't find the product
+			
 			throw new RuntimeException("Did not find product id - " + theId);
 		}
 		

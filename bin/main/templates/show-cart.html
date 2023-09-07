@@ -1,0 +1,67 @@
+
+   <!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+	<link th:href="@{style.css}" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<title>List de Pizza</title>
+</head>
+
+<body>
+
+<div class="container">
+
+	<h3>PizzArrive</h3>
+	<hr>
+	<h3>Mon panier</h3>
+	
+	<!-- Add a button -->
+
+	<table class="table table-bordered table-striped">
+		<thead class="table-dark">
+			<tr>
+				<th></th>
+				<th>Nom</th>
+				<th>prix</th>
+				<th>Quantité</th>
+				<th>Total</th>		
+			</tr>
+		</thead>
+		
+		<tbody>
+
+
+		        <tr th:each="orderDetail : ${orderDetails}">
+					   <td class="w-25">
+			      	<img th:src="${orderDetail.product.urlImage}" class="img-fluid img-thumbnail" alt="pizza">
+		    		 </td>
+		            <td th:text="${orderDetail.product.nom}"></td>
+		            <td th:text="${orderDetail.product.prix}"></td>
+		            <td th:text="${orderDetail.quantity}"></td>
+		         
+		            <td th:text="${orderDetail.quantity * orderDetail.product.prix}"></td>
+		     	</tr>
+		   </table>
+			
+			
+
+			
+
+			</tr>
+		</tbody>		
+	</table>
+	
+</div>
+         
+       
+                  
+     
+ 
