@@ -6,7 +6,9 @@
 
 ###  Technologies used : 
 ```
-Spring boot for the backend and thymeleaf in the frontend
-```
-DB: MySQL
+1.Spring boot for the backend
+2.thymeleaf in the frontend
+3.DB: MySQL
+
+
 
